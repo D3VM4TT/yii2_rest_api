@@ -5,6 +5,7 @@ namespace common\models;
 use common\models\query\CommentQuery;
 use common\models\query\PostQuery;
 use Yii;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "post".
@@ -27,6 +28,18 @@ class Post extends \yii\db\ActiveRecord
     public static function tableName()
     {
         return 'post';
+    }
+
+    public function behaviors(): array
+    {
+        return [
+          TimestampBehavior::class,
+            [
+                'class' => \yii\behaviors\BlameableBehavior::class,
+                'createdByAttribute' => 'created_by',
+                'updatedByAttribute' => false,
+            ]
+        ];
     }
 
     /**
